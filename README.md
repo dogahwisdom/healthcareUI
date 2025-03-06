@@ -1,4 +1,3 @@
-
 # Hospital Management System
 
 A Python-based desktop application for managing hospital operations, including user authentication, patient management, appointment scheduling, and medical record management. Built using `tkinter`, `ttkbootstrap`, and `pyodbc` for SQL Server integration.
@@ -30,7 +29,7 @@ To run this application, ensure you have:
 Clone this repository to your local machine:
 ```bash
 git clone https://github.com/dogahwisdom/healthcareUI
-cd your-repo-name
+cd healthcareUI
 ```
 
 ### 2. Database Configuration
@@ -126,6 +125,3 @@ Activity is logged to `app.log` in the project directory. Check it for:
 ## License
 This project is unlicensed and free to use or modify as needed.
 
----
-
-This README is now well-structured with proper Markdown formatting, concise instructions, and reflects that the database schema is included in the GitHub repo. Replace `https://github.com/your-username/your-repo-name.git` with your actual repository URL. Let me know if you need further tweaks!
