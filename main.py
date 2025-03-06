@@ -54,10 +54,12 @@ class Session:
     def __init__(self):
         self.username: Optional[str] = None
         self.role: Optional[str] = None
+        self.user_id: Optional[int] = None  # Added user_id for role-based queries
 
     def clear(self):
         self.username = None
         self.role = None
+        self.user_id = None
 
 
 class HospitalApp:
@@ -68,6 +70,7 @@ class HospitalApp:
         self.session = Session()
         self.db = Database()
         self.style = ttkb.Style()
+        self.style.theme_use("cosmo")  # Default theme
 
         self._setup_ui()
         self.show_login()
@@ -80,28 +83,38 @@ class HospitalApp:
         self.root.grid_rowconfigure(3, weight=1)
         self.root.grid_columnconfigure(0, weight=1)
 
+        # Theme selection
         self.theme_var = tk.StringVar(value="cosmo")
-        ttkb.Combobox(
+        theme_label = ttkb.Label(self.root, text="Theme:")
+        theme_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
+        theme_combobox = ttkb.Combobox(
             self.root,
             textvariable=self.theme_var,
             values=["cosmo", "litera", "darkly", "superhero", "minty"],
             state="readonly"
-        ).grid(row=0, column=0, padx=10, pady=10, sticky="ew")
-        self.theme_var.trace("w", self._change_theme)
+        )
+        theme_combobox.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+        theme_combobox.bind("<<ComboboxSelected>>", self._change_theme)
 
+        # Font Size Control
         self.font_size_var = tk.IntVar(value=12)
-        ttkb.Label(self.root, text="Font Size:").grid(row=1, column=0, padx=10, pady=(0, 5), sticky="w")
-        ttkb.Scale(
+        font_size_label = ttkb.Label(self.root, text="Font Size:")
+        font_size_label.grid(row=1, column=0, padx=5, pady=(0, 5), sticky="w")
+        font_size_scale = ttkb.Scale(
             self.root,
             from_=10,
             to=20,
             variable=self.font_size_var,
             command=self._change_font_size
-        ).grid(row=2, column=0, padx=10, pady=(0, 5), sticky="ew")
+        )
+        font_size_scale.grid(row=1, column=1, padx=5, pady=(0, 5), sticky="ew")
 
-    def _change_theme(self, *args):
-        self.style.theme_use(self.theme_var.get())
-        logging.info(f"Theme changed to: {self.theme_var.get()}")
+    def _change_theme(self, event=None):
+        """Changes the theme of the application."""
+        selected_theme = self.theme_var.get()
+        self.style.theme_use(selected_theme)
+        logging.info(f"Theme changed to: {selected_theme}")
+        self.root.update()
 
     def _change_font_size(self, value: str):
         size = int(float(value))
@@ -112,9 +125,9 @@ class HospitalApp:
         """Create and configure a new frame"""
         if hasattr(self, 'current_frame'):
             self.current_frame.destroy()
-        frame = ttkb.Frame(self.root)
-        frame.grid(row=3, column=0, pady=50, sticky="nsew")
-        ttkb.Label(frame, text=title, font=("Arial", 16)).grid(row=0, column=0, columnspan=2, pady=20)
+        frame = ttkb.Frame(self.root, padding=20)
+        frame.grid(row=3, column=0, pady=20, padx=20, sticky="nsew")
+        ttkb.Label(frame, text=title, font=("Arial", 18, "bold")).grid(row=0, column=0, columnspan=2, pady=(0, 20), sticky="n")
         self.current_frame = frame
         frame.grid_columnconfigure(0, weight=1)
         frame.grid_columnconfigure(1, weight=1)
@@ -123,20 +136,25 @@ class HospitalApp:
     def show_login(self):
         frame = self._create_frame("Login")
 
-        ttkb.Label(frame, text="Username:").grid(row=1, column=0, padx=10, pady=10, sticky="e")
+        ttkb.Label(frame, text="Username:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
         self.username_entry = ttkb.Entry(frame)
-        self.username_entry.grid(row=1, column=1, padx=10, pady=10, sticky="w")
+        self.username_entry.grid(row=1, column=1, padx=10, pady=5, sticky="w")
 
-        ttkb.Label(frame, text="Password:").grid(row=2, column=0, padx=10, pady=10, sticky="e")
+        ttkb.Label(frame, text="Password:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
         self.password_entry = ttkb.Entry(frame, show="*")
-        self.password_entry.grid(row=2, column=1, padx=10, pady=10, sticky="w")
+        self.password_entry.grid(row=2, column=1, padx=10, pady=5, sticky="w")
 
-        ttkb.Button(frame, text="Login", command=self._login, bootstyle=SUCCESS).grid(row=3, column=1, pady=10,
-                                                                                      sticky="w")
-        ttkb.Button(frame, text="Signup", command=self.show_signup, bootstyle=INFO).grid(row=4, column=1, pady=10,
-                                                                                         sticky="w")
-        ttkb.Button(frame, text="Forgot Password", command=self.show_forgot_password,
-                    bootstyle=WARNING).grid(row=5, column=1, pady=10, sticky="w")
+        login_button = ttkb.Button(frame, text="Login", command=self._login, bootstyle=SUCCESS)
+        login_button.grid(row=3, column=1, pady=10, sticky="w")
+
+        signup_button = ttkb.Button(frame, text="Signup", command=self.show_signup, bootstyle=INFO)
+        signup_button.grid(row=4, column=1, pady=5, sticky="w")
+
+        forgot_password_button = ttkb.Button(frame, text="Forgot Password", command=self.show_forgot_password, bootstyle=WARNING)
+        forgot_password_button.grid(row=5, column=1, pady=5, sticky="w")
+
+        for child in frame.winfo_children():
+            child.grid_configure(padx=5, pady=3)
 
     def _login(self):
         username = self.username_entry.get().strip()
@@ -145,13 +163,14 @@ class HospitalApp:
         logging.info(f"Login attempt: {username}")
 
         try:
-            self.db.cursor.execute("SELECT Password, Role FROM Users WHERE Username = ?", (username,))
+            self.db.cursor.execute("SELECT Username, Password, Role, DoctorID FROM Users LEFT JOIN Doctors ON Users.Username = Doctors.DoctorName WHERE Username = ?", (username,))
             user = self.db.cursor.fetchone()
 
-            if user and bcrypt.checkpw(password.encode(), user[0].encode()):
+            if user and bcrypt.checkpw(password.encode(), user[1].encode()):
                 self.session.username = username
-                self.session.role = user[1]
-                logging.info(f"User {username} logged in as {user[1]}")
+                self.session.role = user[2]
+                self.session.user_id = user[3] if user[3] else None  # Set DoctorID for doctors
+                logging.info(f"User {username} logged in as {user[2]}")
                 self._show_dashboard()
             else:
                 messagebox.showerror("Login Failed", "Invalid credentials")
@@ -172,15 +191,19 @@ class HospitalApp:
 
         self.signup_entries = {}
         for i, (label, key, widget_type) in enumerate(fields, start=1):
-            ttkb.Label(frame, text=label).grid(row=i, column=0, padx=10, pady=10, sticky="e")
+            ttkb.Label(frame, text=label).grid(row=i, column=0, padx=10, pady=5, sticky="e")
             widget = widget_type(frame)
-            widget.grid(row=i, column=1, padx=10, pady=10, sticky="w")
+            widget.grid(row=i, column=1, padx=10, pady=5, sticky="w")
             self.signup_entries[key] = widget
 
-        ttkb.Button(frame, text="Signup", command=self._signup, bootstyle=SUCCESS).grid(row=5, column=1, pady=10,
-                                                                                        sticky="w")
-        ttkb.Button(frame, text="Back", command=self.show_login, bootstyle=DANGER).grid(row=5, column=0, pady=10,
-                                                                                        sticky="e")
+        signup_button = ttkb.Button(frame, text="Signup", command=self._signup, bootstyle=SUCCESS)
+        signup_button.grid(row=len(fields) + 1, column=1, pady=10, sticky="w")
+
+        back_button = ttkb.Button(frame, text="Back", command=self.show_login, bootstyle=DANGER)
+        back_button.grid(row=len(fields) + 1, column=0, pady=10, sticky="e")
+
+        for child in frame.winfo_children():
+            child.grid_configure(padx=5, pady=3)
 
     def _signup(self):
         data = {k: v.get().strip() for k, v in self.signup_entries.items()}
@@ -223,18 +246,22 @@ class HospitalApp:
     def show_forgot_password(self):
         frame = self._create_frame("Forgot Password")
 
-        ttkb.Label(frame, text="Username:").grid(row=1, column=0, padx=10, pady=10, sticky="e")
+        ttkb.Label(frame, text="Username:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
         self.forgot_username = ttkb.Entry(frame)
-        self.forgot_username.grid(row=1, column=1, padx=10, pady=10, sticky="w")
+        self.forgot_username.grid(row=1, column=1, padx=10, pady=5, sticky="w")
 
-        ttkb.Label(frame, text="Email:").grid(row=2, column=0, padx=10, pady=10, sticky="e")
+        ttkb.Label(frame, text="Email:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
         self.forgot_email = ttkb.Entry(frame)
-        self.forgot_email.grid(row=2, column=1, padx=10, pady=10, sticky="w")
+        self.forgot_email.grid(row=2, column=1, padx=10, pady=5, sticky="w")
 
-        ttkb.Button(frame, text="Generate Token", command=self._generate_token,
-                    bootstyle=SUCCESS).grid(row=3, column=1, pady=10, sticky="w")
-        ttkb.Button(frame, text="Back", command=self.show_login,
-                    bootstyle=DANGER).grid(row=4, column=1, pady=10, sticky="w")
+        generate_token_button = ttkb.Button(frame, text="Generate Token", command=self._generate_token, bootstyle=SUCCESS)
+        generate_token_button.grid(row=3, column=1, pady=10, sticky="w")
+
+        back_button = ttkb.Button(frame, text="Back", command=self.show_login, bootstyle=DANGER)
+        back_button.grid(row=4, column=1, pady=10, sticky="w")
+
+        for child in frame.winfo_children():
+            child.grid_configure(padx=5, pady=3)
 
     def _generate_token(self):
         username = self.forgot_username.get().strip()
@@ -287,23 +314,27 @@ class HospitalApp:
     def _show_reset_password(self, token: str):
         frame = self._create_frame("Reset Password")
 
-        ttkb.Label(frame, text="Token:").grid(row=1, column=0, padx=10, pady=10, sticky="e")
+        ttkb.Label(frame, text="Token:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
         token_entry = ttkb.Entry(frame)
         token_entry.insert(0, token)
-        token_entry.grid(row=1, column=1, padx=10, pady=10, sticky="w")
+        token_entry.grid(row=1, column=1, padx=10, pady=5, sticky="w")
 
-        ttkb.Label(frame, text="New Password:").grid(row=2, column=0, padx=10, pady=10, sticky="e")
+        ttkb.Label(frame, text="New Password:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
         self.reset_pass = ttkb.Entry(frame, show="*")
-        self.reset_pass.grid(row=2, column=1, padx=10, pady=10, sticky="w")
+        self.reset_pass.grid(row=2, column=1, padx=10, pady=5, sticky="w")
 
-        ttkb.Label(frame, text="Confirm:").grid(row=3, column=0, padx=10, pady=10, sticky="e")
+        ttkb.Label(frame, text="Confirm:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
         self.reset_confirm = ttkb.Entry(frame, show="*")
-        self.reset_confirm.grid(row=3, column=1, padx=10, pady=10, sticky="w")
+        self.reset_confirm.grid(row=3, column=1, padx=10, pady=5, sticky="w")
 
-        ttkb.Button(frame, text="Reset", command=lambda: self._reset_password(token),
-                    bootstyle=SUCCESS).grid(row=4, column=1, pady=10, sticky="w")
-        ttkb.Button(frame, text="Back", command=self.show_login,
-                    bootstyle=DANGER).grid(row=4, column=0, pady=10, sticky="e")
+        reset_button = ttkb.Button(frame, text="Reset", command=lambda: self._reset_password(token), bootstyle=SUCCESS)
+        reset_button.grid(row=4, column=1, pady=10, sticky="w")
+
+        back_button = ttkb.Button(frame, text="Back", command=self.show_login, bootstyle=DANGER)
+        back_button.grid(row=4, column=0, pady=10, sticky="e")
+
+        for child in frame.winfo_children():
+            child.grid_configure(padx=5, pady=3)
 
     def _reset_password(self, token: str):
         password = self.reset_pass.get()
@@ -358,7 +389,7 @@ class HospitalApp:
             ],
             "Doctor": [
                 ("View My Patients", self._view_doctor_patients, PRIMARY),
-                ("View Appointments", self._view_doctor_appointments, INFO),
+                ("View My Appointments", self._view_doctor_appointments, INFO),  # Updated to use the new method
                 ("Update Records", self._update_patient_records, SUCCESS)
             ],
             "Receptionist": [
@@ -369,13 +400,13 @@ class HospitalApp:
             ]
         }
 
+        num_actions = len(actions.get(self.session.role, []))
         for i, (text, command, style) in enumerate(actions.get(self.session.role, []), start=1):
-            ttkb.Button(frame, text=text, command=command,
-                        bootstyle=style).grid(row=i, column=0, columnspan=2, pady=10, sticky="ew")
+            button = ttkb.Button(frame, text=text, command=command, bootstyle=style)
+            button.grid(row=i, column=0, columnspan=2, pady=5, sticky="ew")
 
-        ttkb.Button(frame, text="Logout", command=self._logout,
-                    bootstyle=DARK).grid(row=len(actions.get(self.session.role, [])) + 1,
-                                         column=0, columnspan=2, pady=10, sticky="ew")
+        logout_button = ttkb.Button(frame, text="Logout", command=self._logout, bootstyle=DARK)
+        logout_button.grid(row=num_actions + 1, column=0, columnspan=2, pady=10, sticky="ew")
 
     def _logout(self):
         self.session.clear()
@@ -384,45 +415,48 @@ class HospitalApp:
 
     def _view_patients(self):
         frame = self._create_frame("Patients List")
-        tree = ttk.Treeview(frame, columns=("ID", "Name", "DOB", "Contact"), show="headings")
+        tree = ttk.Treeview(frame, columns=("ID", "Name", "DOB", "Gender", "Contact"), show="headings", bootstyle="primary")
         tree.heading("ID", text="Patient ID")
         tree.heading("Name", text="Name")
         tree.heading("DOB", text="Date of Birth")
+        tree.heading("Gender", text="Gender")
         tree.heading("Contact", text="Contact")
         tree.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
 
         try:
-            self.db.cursor.execute("SELECT PatientID, Name, DOB, Contact FROM Patients")
+            self.db.cursor.execute("SELECT PatientID, PatientName, DateOfBirth, Gender, ContactNumber FROM Patients")
             for row in self.db.cursor.fetchall():
                 tree.insert("", "end", values=row)
         except Exception as e:
             messagebox.showerror("Error", f"Database error: {e}")
             logging.error(f"View patients error: {e}")
 
-        ttkb.Button(frame, text="Back", command=self._show_dashboard,
-                    bootstyle=DANGER).grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
+        back_button = ttkb.Button(frame, text="Back", command=self._show_dashboard, bootstyle=DANGER)
+        back_button.grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
 
     def _add_patient(self):
         frame = self._create_frame("Add Patient")
 
         fields = [
-            ("Name:", "name", ttkb.Entry),
-            ("Date of Birth (YYYY-MM-DD):", "dob", ttkb.Entry),
-            ("Contact:", "contact", ttkb.Entry),
-            ("Address:", "address", ttkb.Entry)
+            ("Name:", "PatientName", ttkb.Entry),
+            ("Date of Birth (YYYY-MM-DD):", "DateOfBirth", ttkb.Entry),
+            ("Gender:", "Gender", ttkb.Entry),
+            ("Contact Number:", "ContactNumber", ttkb.Entry)
         ]
 
         self.patient_entries = {}
         for i, (label, key, widget_type) in enumerate(fields, start=1):
-            ttkb.Label(frame, text=label).grid(row=i, column=0, padx=10, pady=10, sticky="e")
+            label_widget = ttkb.Label(frame, text=label)
+            label_widget.grid(row=i, column=0, padx=10, pady=5, sticky="e")
             widget = widget_type(frame)
-            widget.grid(row=i, column=1, padx=10, pady=10, sticky="w")
+            widget.grid(row=i, column=1, padx=10, pady=5, sticky="w")
             self.patient_entries[key] = widget
 
-        ttkb.Button(frame, text="Add", command=self._save_patient,
-                    bootstyle=SUCCESS).grid(row=5, column=1, pady=10, sticky="w")
-        ttkb.Button(frame, text="Back", command=self._show_dashboard,
-                    bootstyle=DANGER).grid(row=5, column=0, pady=10, sticky="e")
+        add_button = ttkb.Button(frame, text="Add", command=self._save_patient, bootstyle=SUCCESS)
+        add_button.grid(row=len(fields) + 1, column=1, pady=10, sticky="w")
+
+        back_button = ttkb.Button(frame, text="Back", command=self._show_dashboard, bootstyle=DANGER)
+        back_button.grid(row=len(fields) + 1, column=0, pady=10, sticky="e")
 
     def _save_patient(self):
         data = {k: v.get().strip() for k, v in self.patient_entries.items()}
@@ -431,62 +465,91 @@ class HospitalApp:
             messagebox.showerror("Error", "All fields required")
             return
 
+        if not re.match(r"^[a-zA-Z\s]+$", data["PatientName"]):
+            messagebox.showerror("Error", "Invalid Patient Name. Only letters and spaces allowed.")
+            return
+
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", data["DateOfBirth"]):
+            messagebox.showerror("Error", "Invalid Date of Birth format. Use YYYY-MM-DD.")
+            return
+
+        if not re.match(r"^(Male|Female|Other)$", data["Gender"], re.IGNORECASE):
+            messagebox.showerror("Error", "Invalid Gender. Use Male, Female, or Other.")
+            return
+
+        if not re.match(r"^\d{3}-\d{3}-\d{4}$", data["ContactNumber"]):
+            messagebox.showerror("Error", "Invalid Contact Number format. Use XXX-XXX-XXXX.")
+            return
+
         try:
-            dob = datetime.strptime(data["dob"], "%Y-%m-%d")
+            dob = datetime.strptime(data["DateOfBirth"], "%Y-%m-%d").date()
             self.db.cursor.execute(
-                "INSERT INTO Patients (Name, DOB, Contact, Address) VALUES (?, ?, ?, ?)",
-                (data["name"], dob, data["contact"], data["address"])
+                "EXEC AddPatient @PatientName=?, @DateOfBirth=?, @Gender=?, @ContactNumber=?",
+                (data["PatientName"], dob, data["Gender"], data["ContactNumber"])
             )
             self.db.commit()
             messagebox.showinfo("Success", "Patient added successfully")
             self._show_dashboard()
-            logging.info(f"Patient added: {data['name']}")
-        except ValueError:
-            messagebox.showerror("Error", "Invalid date format (use YYYY-MM-DD)")
+            logging.info(f"Patient added: {data['PatientName']}")
         except Exception as e:
-            messagebox.showerror("Error", f"Database error: {e}")
+            messagebox.showerror("Error", f"An error occurred: {e}")
             logging.error(f"Add patient error: {e}")
 
     def _view_doctors(self):
         frame = self._create_frame("Doctors List")
-        tree = ttk.Treeview(frame, columns=("ID", "Name", "Specialty"), show="headings")
+        tree = ttk.Treeview(frame, columns=("ID", "Name", "Specialty"), show="headings", bootstyle="primary")
         tree.heading("ID", text="Doctor ID")
         tree.heading("Name", text="Name")
         tree.heading("Specialty", text="Specialty")
         tree.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
 
         try:
-            self.db.cursor.execute("SELECT DoctorID, Name, Specialty FROM Doctors")
+            self.db.cursor.execute("SELECT DoctorID, DoctorName, Specialization FROM Doctors")
             for row in self.db.cursor.fetchall():
                 tree.insert("", "end", values=row)
         except Exception as e:
             messagebox.showerror("Error", f"Database error: {e}")
             logging.error(f"View doctors error: {e}")
 
-        ttkb.Button(frame, text="Back", command=self._show_dashboard,
-                    bootstyle=DANGER).grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
+        back_button = ttkb.Button(frame, text="Back", command=self._show_dashboard, bootstyle=DANGER)
+        back_button.grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
 
     def _schedule_appointment(self):
         frame = self._create_frame("Schedule Appointment")
 
+        try:
+            self.db.cursor.execute("SELECT DoctorID, DoctorName FROM Doctors")
+            doctors = self.db.cursor.fetchall()
+            doctor_options = [f"{d[1]} (ID: {d[0]})" for d in doctors]
+            self.doctor_ids = {d[0]: d[1] for d in doctors}
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to fetch doctors: {e}")
+            logging.error(f"Failed to fetch doctors: {e}")
+            return
+
         fields = [
-            ("Patient ID:", "patient_id", ttkb.Entry),
-            ("Doctor ID:", "doctor_id", ttkb.Entry),
-            ("Date (YYYY-MM-DD):", "date", ttkb.Entry),
-            ("Time (HH:MM):", "time", ttkb.Entry)
+            ("Patient ID:", "PatientID", ttkb.Entry),
+            ("Doctor:", "Doctor", ttkb.Combobox, doctor_options),
+            ("Date (YYYY-MM-DD):", "AppointmentDate", ttkb.Entry),
+            ("Time (HH:MM):", "AppointmentTime", ttkb.Entry)
         ]
 
         self.appointment_entries = {}
-        for i, (label, key, widget_type) in enumerate(fields, start=1):
-            ttkb.Label(frame, text=label).grid(row=i, column=0, padx=10, pady=10, sticky="e")
-            widget = widget_type(frame)
-            widget.grid(row=i, column=1, padx=10, pady=10, sticky="w")
+        for i, (label, key, widget_type, *args) in enumerate(fields, start=1):
+            label_widget = ttkb.Label(frame, text=label)
+            label_widget.grid(row=i, column=0, padx=10, pady=5, sticky="e")
+            if widget_type == ttkb.Combobox:
+                widget = ttkb.Combobox(frame, values=args[0], state="readonly")
+            else:
+                widget = widget_type(frame)
+            widget.grid(row=i, column=1, padx=10, pady=5, sticky="w")
             self.appointment_entries[key] = widget
 
-        ttkb.Button(frame, text="Schedule", command=self._save_appointment,
-                    bootstyle=SUCCESS).grid(row=5, column=1, pady=10, sticky="w")
-        ttkb.Button(frame, text="Back", command=self._show_dashboard,
-                    bootstyle=DANGER).grid(row=5, column=0, pady=10, sticky="e")
+        schedule_button = ttkb.Button(frame, text="Schedule", command=self._save_appointment, bootstyle=SUCCESS)
+        schedule_button.grid(row=len(fields) + 1, column=1, pady=10, sticky="w")
+
+        back_button = ttkb.Button(frame, text="Back", command=self._show_dashboard, bootstyle=DANGER)
+        back_button.grid(row=len(fields) + 1, column=0, pady=10, sticky="e")
 
     def _save_appointment(self):
         data = {k: v.get().strip() for k, v in self.appointment_entries.items()}
@@ -495,45 +558,57 @@ class HospitalApp:
             messagebox.showerror("Error", "All fields required")
             return
 
+        if not re.match(r"^\d+$", data["PatientID"]):
+            messagebox.showerror("Error", "Invalid Patient ID. Must be numeric.")
+            return
+
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", data["AppointmentDate"]):
+            messagebox.showerror("Error", "Invalid Date format. Use YYYY-MM-DD.")
+            return
+
+        if not re.match(r"^\d{2}:\d{2}$", data["AppointmentTime"]):
+            messagebox.showerror("Error", "Invalid Time format. Use HH:MM.")
+            return
+
         try:
-            appt_datetime = datetime.strptime(f"{data['date']} {data['time']}", "%Y-%m-%d %H:%M")
+            doctor_id = int(data["Doctor"].split("(ID: ")[1][:-1])
+            appt_datetime = datetime.strptime(f"{data['AppointmentDate']} {data['AppointmentTime']}", "%Y-%m-%d %H:%M")
             self.db.cursor.execute(
                 "INSERT INTO Appointments (PatientID, DoctorID, AppointmentDate) VALUES (?, ?, ?)",
-                (data["patient_id"], data["doctor_id"], appt_datetime)
+                (data["PatientID"], doctor_id, appt_datetime)
             )
             self.db.commit()
             messagebox.showinfo("Success", "Appointment scheduled")
             self._show_dashboard()
-            logging.info(f"Appointment scheduled: Patient {data['patient_id']} with Doctor {data['doctor_id']}")
-        except ValueError:
-            messagebox.showerror("Error", "Invalid date/time format (use YYYY-MM-DD HH:MM)")
+            logging.info(f"Appointment scheduled: Patient {data['PatientID']} with Doctor {doctor_id}")
         except Exception as e:
-            messagebox.showerror("Error", f"Database error: {e}")
+            messagebox.showerror("Error", f"An error occurred: {e}")
             logging.error(f"Schedule appointment error: {e}")
 
     def _view_appointments(self):
         frame = self._create_frame("Appointments List")
-        tree = ttk.Treeview(frame, columns=("ID", "Patient", "Doctor", "Date"), show="headings")
+        tree = ttk.Treeview(frame, columns=("ID", "Patient", "Doctor", "Date", "Status"), show="headings", bootstyle="primary")
         tree.heading("ID", text="Appointment ID")
         tree.heading("Patient", text="Patient ID")
         tree.heading("Doctor", text="Doctor ID")
         tree.heading("Date", text="Date")
+        tree.heading("Status", text="Status")
         tree.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
 
         try:
-            self.db.cursor.execute("SELECT AppointmentID, PatientID, DoctorID, AppointmentDate FROM Appointments")
+            self.db.cursor.execute("SELECT AppointmentID, PatientID, DoctorID, AppointmentDate, Status FROM Appointments")
             for row in self.db.cursor.fetchall():
                 tree.insert("", "end", values=row)
         except Exception as e:
             messagebox.showerror("Error", f"Database error: {e}")
             logging.error(f"View appointments error: {e}")
 
-        ttkb.Button(frame, text="Back", command=self._show_dashboard,
-                    bootstyle=DANGER).grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
+        back_button = ttkb.Button(frame, text="Back", command=self._show_dashboard, bootstyle=DANGER)
+        back_button.grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
 
     def _view_doctor_patients(self):
         frame = self._create_frame("My Patients")
-        tree = ttk.Treeview(frame, columns=("ID", "Name", "DOB", "Contact"), show="headings")
+        tree = ttk.Treeview(frame, columns=("ID", "Name", "DOB", "Contact"), show="headings", bootstyle="primary")
         tree.heading("ID", text="Patient ID")
         tree.heading("Name", text="Name")
         tree.heading("DOB", text="Date of Birth")
@@ -542,112 +617,111 @@ class HospitalApp:
 
         try:
             self.db.cursor.execute("""
-                SELECT DISTINCT p.PatientID, p.Name, p.DOB, p.Contact 
+                SELECT DISTINCT p.PatientID, p.PatientName, p.DateOfBirth, p.ContactNumber
                 FROM Patients p
                 JOIN Appointments a ON p.PatientID = a.PatientID
                 JOIN Doctors d ON a.DoctorID = d.DoctorID
-                WHERE d.Username = ?
-            """, (self.session.username,))
+                WHERE d.DoctorID = ?
+            """, (self.session.user_id,))
             for row in self.db.cursor.fetchall():
                 tree.insert("", "end", values=row)
         except Exception as e:
             messagebox.showerror("Error", f"Database error: {e}")
             logging.error(f"View doctor patients error: {e}")
 
-        ttkb.Button(frame, text="Back", command=self._show_dashboard,
-                    bootstyle=DANGER).grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
+        back_button = ttkb.Button(frame, text="Back", command=self._show_dashboard, bootstyle=DANGER)
+        back_button.grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
 
     def _view_doctor_appointments(self):
         frame = self._create_frame("My Appointments")
-        tree = ttk.Treeview(frame, columns=("ID", "Patient", "Date"), show="headings")
+        tree = ttk.Treeview(frame, columns=("ID", "Patient", "Date", "Status"), show="headings", bootstyle="primary")
         tree.heading("ID", text="Appointment ID")
         tree.heading("Patient", text="Patient ID")
         tree.heading("Date", text="Date")
+        tree.heading("Status", text="Status")
         tree.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
 
         try:
             self.db.cursor.execute("""
-                SELECT a.AppointmentID, a.PatientID, a.AppointmentDate 
-                FROM Appointments a
-                JOIN Doctors d ON a.DoctorID = d.DoctorID
-                WHERE d.Username = ?
-            """, (self.session.username,))
+                SELECT AppointmentID, PatientID, AppointmentDate, Status
+                FROM Appointments
+                WHERE DoctorID = ?
+            """, (self.session.user_id,))
             for row in self.db.cursor.fetchall():
                 tree.insert("", "end", values=row)
         except Exception as e:
             messagebox.showerror("Error", f"Database error: {e}")
             logging.error(f"View doctor appointments error: {e}")
 
-        ttkb.Button(frame, text="Back", command=self._show_dashboard,
-                    bootstyle=DANGER).grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
+        back_button = ttkb.Button(frame, text="Back", command=self._show_dashboard, bootstyle=DANGER)
+        back_button.grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
 
-    def _manage_records(self):
-        frame = self._create_frame("Manage Medical Records")
+    def _update_patient_records(self):
+        frame = self._create_frame("Update Patient Records")
+        ttkb.Label(frame, text="Patient ID:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        self.patient_id_entry = ttkb.Entry(frame)
+        self.patient_id_entry.grid(row=1, column=1, padx=10, pady=5, sticky="w")
 
-        ttkb.Label(frame, text="Patient ID:").grid(row=1, column=0, padx=10, pady=10, sticky="e")
-        self.record_pid = ttkb.Entry(frame)
-        self.record_pid.grid(row=1, column=1, padx=10, pady=10, sticky="w")
+        ttkb.Label(frame, text="Diagnosis:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        self.diagnosis_entry = ttkb.Entry(frame)
+        self.diagnosis_entry.grid(row=2, column=1, padx=10, pady=5, sticky="w")
 
-        ttkb.Label(frame, text="Diagnosis:").grid(row=2, column=0, padx=10, pady=10, sticky="e")
-        self.record_diagnosis = ttkb.Entry(frame)
-        self.record_diagnosis.grid(row=2, column=1, padx=10, pady=10, sticky="w")
+        ttkb.Label(frame, text="Treatment:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        self.treatment_entry = ttkb.Entry(frame)
+        self.treatment_entry.grid(row=3, column=1, padx=10, pady=5, sticky="w")
 
-        ttkb.Label(frame, text="Treatment:").grid(row=3, column=0, padx=10, pady=10, sticky="e")
-        self.record_treatment = ttkb.Entry(frame)
-        self.record_treatment.grid(row=3, column=1, padx=10, pady=10, sticky="w")
+        update_button = ttkb.Button(frame, text="Update", command=self._save_medical_record, bootstyle=SUCCESS)
+        update_button.grid(row=4, column=1, pady=10, sticky="w")
 
-        ttkb.Button(frame, text="Save", command=self._save_record,
-                    bootstyle=SUCCESS).grid(row=4, column=1, pady=10, sticky="w")
-        ttkb.Button(frame, text="Back", command=self._show_dashboard,
-                    bootstyle=DANGER).grid(row=4, column=0, pady=10, sticky="e")
+        back_button = ttkb.Button(frame, text="Back", command=self._show_dashboard, bootstyle=DANGER)
+        back_button.grid(row=4, column=0, pady=10, sticky="e")
 
-    def _save_record(self):
-        pid = self.record_pid.get().strip()
-        diagnosis = self.record_diagnosis.get().strip()
-        treatment = self.record_treatment.get().strip()
+    def _save_medical_record(self):
+        patient_id = self.patient_id_entry.get().strip()
+        diagnosis = self.diagnosis_entry.get().strip()
+        treatment = self.treatment_entry.get().strip()
 
-        if not all([pid, diagnosis, treatment]):
+        if not all([patient_id, diagnosis, treatment]):
             messagebox.showerror("Error", "All fields required")
             return
 
         try:
             self.db.cursor.execute(
-                "INSERT INTO MedicalRecords (PatientID, Diagnosis, Treatment, RecordDate) VALUES (?, ?, ?, ?)",
-                (pid, diagnosis, treatment, datetime.now())
+                "INSERT INTO MedicalRecords (PatientID, DoctorID, Diagnosis, Treatment, RecordDate) VALUES (?, ?, ?, ?, ?)",
+                (patient_id, self.session.user_id, diagnosis, treatment, datetime.now())
             )
             self.db.commit()
-            messagebox.showinfo("Success", "Record saved")
+            messagebox.showinfo("Success", "Medical record updated")
             self._show_dashboard()
-            logging.info(f"Record saved for patient {pid}")
+            logging.info(f"Medical record updated for Patient {patient_id}")
         except Exception as e:
             messagebox.showerror("Error", f"Database error: {e}")
-            logging.error(f"Save record error: {e}")
+            logging.error(f"Update medical record error: {e}")
 
-    def _update_patient_records(self):
-        frame = self._create_frame("Update Patient Records")
+    def _manage_records(self):
+        frame = self._create_frame("Manage Medical Records")
+        tree = ttk.Treeview(frame, columns=("ID", "Patient", "Doctor", "Diagnosis", "Treatment", "Date"), show="headings", bootstyle="primary")
+        tree.heading("ID", text="Record ID")
+        tree.heading("Patient", text="Patient ID")
+        tree.heading("Doctor", text="Doctor ID")
+        tree.heading("Diagnosis", text="Diagnosis")
+        tree.heading("Treatment", text="Treatment")
+        tree.heading("Date", text="Date")
+        tree.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
 
-        ttkb.Label(frame, text="Patient ID:").grid(row=1, column=0, padx=10, pady=10, sticky="e")
-        self.record_pid = ttkb.Entry(frame)
-        self.record_pid.grid(row=1, column=1, padx=10, pady=10, sticky="w")
+        try:
+            self.db.cursor.execute("SELECT RecordID, PatientID, DoctorID, Diagnosis, Treatment, RecordDate FROM MedicalRecords")
+            for row in self.db.cursor.fetchall():
+                tree.insert("", "end", values=row)
+        except Exception as e:
+            messagebox.showerror("Error", f"Database error: {e}")
+            logging.error(f"View medical records error: {e}")
 
-        ttkb.Label(frame, text="Diagnosis:").grid(row=2, column=0, padx=10, pady=10, sticky="e")
-        self.record_diagnosis = ttkb.Entry(frame)
-        self.record_diagnosis.grid(row=2, column=1, padx=10, pady=10, sticky="w")
-
-        ttkb.Label(frame, text="Treatment:").grid(row=3, column=0, padx=10, pady=10, sticky="e")
-        self.record_treatment = ttkb.Entry(frame)
-        self.record_treatment.grid(row=3, column=1, padx=10, pady=10, sticky="w")
-
-        ttkb.Button(frame, text="Update", command=self._save_record,
-                    bootstyle=SUCCESS).grid(row=4, column=1, pady=10, sticky="w")
-        ttkb.Button(frame, text="Back", command=self._show_dashboard,
-                    bootstyle=DANGER).grid(row=4, column=0, pady=10, sticky="e")
+        back_button = ttkb.Button(frame, text="Back", command=self._show_dashboard, bootstyle=DANGER)
+        back_button.grid(row=2, column=0, columnspan=2, pady=10, sticky="ew")
 
 
 if __name__ == "__main__":
-    root = ttkb.Window(themename="cosmo")
+    root = ttkb.Window()
     app = HospitalApp(root)
-    try:
-        root.mainloop()
-    finally:
-        app.db.close()
+    root.mainloop()

@@ -323,3 +323,326 @@
 2025-02-27 08:56:08,564 - ERROR - View patients error: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Name'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'DOB'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Contact'. (207)")
 2025-02-27 08:56:14,592 - ERROR - View doctors error: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Name'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Specialty'. (207)")
 2025-02-27 08:56:57,111 - ERROR - Add patient error: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Name'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'DOB'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Contact'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Address'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Statement(s) could not be prepared. (8180)")
+2025-03-06 12:44:09,979 - INFO - Login attempt: admin
+2025-03-06 12:44:11,573 - WARNING - Failed login attempt: admin
+2025-03-06 12:44:20,563 - INFO - Login attempt: admin
+2025-03-06 12:44:22,124 - WARNING - Failed login attempt: admin
+2025-03-06 12:45:13,844 - INFO - New user: david (Admin)
+2025-03-06 12:45:41,015 - INFO - Login attempt: david
+2025-03-06 12:45:41,523 - INFO - User david logged in as Admin
+2025-03-06 12:45:47,381 - INFO - Font size changed to: 12
+2025-03-06 12:45:47,458 - INFO - Font size changed to: 12
+2025-03-06 12:45:47,495 - INFO - Font size changed to: 12
+2025-03-06 12:45:47,559 - INFO - Font size changed to: 12
+2025-03-06 12:45:47,619 - INFO - Font size changed to: 12
+2025-03-06 12:45:47,675 - INFO - Font size changed to: 12
+2025-03-06 12:45:47,739 - INFO - Font size changed to: 12
+2025-03-06 12:45:47,801 - INFO - Font size changed to: 12
+2025-03-06 12:45:47,866 - INFO - Font size changed to: 12
+2025-03-06 12:45:47,931 - INFO - Font size changed to: 12
+2025-03-06 12:45:47,987 - INFO - Font size changed to: 12
+2025-03-06 12:45:48,055 - INFO - Font size changed to: 12
+2025-03-06 12:45:48,123 - INFO - Font size changed to: 12
+2025-03-06 12:45:48,186 - INFO - Font size changed to: 13
+2025-03-06 12:45:48,263 - INFO - Font size changed to: 13
+2025-03-06 12:45:48,333 - INFO - Font size changed to: 13
+2025-03-06 12:45:48,398 - INFO - Font size changed to: 13
+2025-03-06 12:45:49,788 - INFO - Font size changed to: 13
+2025-03-06 12:45:49,882 - INFO - Font size changed to: 13
+2025-03-06 12:45:49,910 - INFO - Font size changed to: 14
+2025-03-06 12:45:49,986 - INFO - Font size changed to: 14
+2025-03-06 12:45:50,052 - INFO - Font size changed to: 14
+2025-03-06 12:45:50,131 - INFO - Font size changed to: 14
+2025-03-06 12:45:50,212 - INFO - Font size changed to: 14
+2025-03-06 12:45:50,278 - INFO - Font size changed to: 14
+2025-03-06 12:45:50,344 - INFO - Font size changed to: 14
+2025-03-06 12:45:50,418 - INFO - Font size changed to: 14
+2025-03-06 12:45:50,482 - INFO - Font size changed to: 15
+2025-03-06 12:45:50,560 - INFO - Font size changed to: 15
+2025-03-06 12:45:50,619 - INFO - Font size changed to: 15
+2025-03-06 12:45:50,689 - INFO - Font size changed to: 15
+2025-03-06 12:45:50,766 - INFO - Font size changed to: 15
+2025-03-06 12:45:50,836 - INFO - Font size changed to: 15
+2025-03-06 12:45:50,911 - INFO - Font size changed to: 15
+2025-03-06 12:45:50,971 - INFO - Font size changed to: 15
+2025-03-06 12:45:51,034 - INFO - Font size changed to: 16
+2025-03-06 12:45:53,902 - INFO - Font size changed to: 16
+2025-03-06 12:45:53,984 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,009 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,061 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,116 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,172 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,235 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,299 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,353 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,410 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,464 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,520 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,587 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,649 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,764 - INFO - Font size changed to: 16
+2025-03-06 12:45:54,788 - INFO - Font size changed to: 17
+2025-03-06 12:45:54,863 - INFO - Font size changed to: 17
+2025-03-06 12:45:54,919 - INFO - Font size changed to: 17
+2025-03-06 12:45:56,340 - INFO - Font size changed to: 17
+2025-03-06 12:45:56,417 - INFO - Font size changed to: 17
+2025-03-06 12:45:56,446 - INFO - Font size changed to: 18
+2025-03-06 12:45:56,511 - INFO - Font size changed to: 18
+2025-03-06 12:45:59,961 - ERROR - View patients error: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Name'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'DOB'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Contact'. (207)")
+2025-03-06 12:46:51,818 - ERROR - Add patient error: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Name'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'DOB'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Contact'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Address'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Statement(s) could not be prepared. (8180)")
+2025-03-06 12:47:08,738 - ERROR - Add patient error: ('42S22', "[42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Name'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'DOB'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Contact'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid column name 'Address'. (207); [42S22] [Microsoft][ODBC SQL Server Driver][SQL Server]Statement(s) could not be prepared. (8180)")
+2025-03-06 13:17:46,782 - INFO - New user: davud (Admin)
+2025-03-06 13:17:58,525 - INFO - Login attempt: davud
+2025-03-06 13:17:59,018 - INFO - User davud logged in as Admin
+2025-03-06 13:18:20,003 - ERROR - Login error: 'HospitalApp' object has no attribute '_manage_records'
+2025-03-06 13:18:24,622 - INFO - Font size changed to: 12
+2025-03-06 13:18:24,651 - INFO - Font size changed to: 13
+2025-03-06 13:18:24,664 - INFO - Font size changed to: 13
+2025-03-06 13:18:24,685 - INFO - Font size changed to: 13
+2025-03-06 13:18:24,711 - INFO - Font size changed to: 14
+2025-03-06 13:18:24,731 - INFO - Font size changed to: 15
+2025-03-06 13:18:24,753 - INFO - Font size changed to: 15
+2025-03-06 13:18:24,776 - INFO - Font size changed to: 16
+2025-03-06 13:18:24,800 - INFO - Font size changed to: 16
+2025-03-06 13:18:24,819 - INFO - Font size changed to: 17
+2025-03-06 13:18:24,842 - INFO - Font size changed to: 17
+2025-03-06 13:18:24,863 - INFO - Font size changed to: 17
+2025-03-06 13:18:24,892 - INFO - Font size changed to: 18
+2025-03-06 13:18:24,915 - INFO - Font size changed to: 18
+2025-03-06 13:18:24,935 - INFO - Font size changed to: 18
+2025-03-06 13:18:24,986 - INFO - Font size changed to: 18
+2025-03-06 13:18:24,995 - INFO - Font size changed to: 18
+2025-03-06 13:18:25,016 - INFO - Font size changed to: 18
+2025-03-06 13:18:25,036 - INFO - Font size changed to: 18
+2025-03-06 13:18:25,069 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,111 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,140 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,147 - INFO - Font size changed to: 18
+2025-03-06 13:18:25,166 - INFO - Font size changed to: 18
+2025-03-06 13:18:25,184 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,211 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,231 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,257 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,277 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,297 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,320 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,338 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,367 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,383 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,506 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,525 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,545 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,551 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,580 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,586 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,603 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,620 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,649 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,666 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,706 - INFO - Font size changed to: 20
+2025-03-06 13:18:25,739 - INFO - Font size changed to: 19
+2025-03-06 13:18:25,759 - INFO - Font size changed to: 18
+2025-03-06 13:18:25,778 - INFO - Font size changed to: 17
+2025-03-06 13:18:25,795 - INFO - Font size changed to: 16
+2025-03-06 13:18:25,812 - INFO - Font size changed to: 15
+2025-03-06 13:18:25,834 - INFO - Font size changed to: 13
+2025-03-06 13:18:25,854 - INFO - Font size changed to: 12
+2025-03-06 13:18:25,872 - INFO - Font size changed to: 12
+2025-03-06 13:18:25,889 - INFO - Font size changed to: 12
+2025-03-06 13:18:25,914 - INFO - Font size changed to: 12
+2025-03-06 13:18:25,934 - INFO - Font size changed to: 11
+2025-03-06 13:18:25,966 - INFO - Font size changed to: 11
+2025-03-06 13:18:25,986 - INFO - Font size changed to: 10
+2025-03-06 13:18:26,021 - INFO - Font size changed to: 10
+2025-03-06 13:18:26,042 - INFO - Font size changed to: 10
+2025-03-06 13:18:26,065 - INFO - Font size changed to: 10
+2025-03-06 13:18:26,088 - INFO - Font size changed to: 10
+2025-03-06 13:18:26,104 - INFO - Font size changed to: 10
+2025-03-06 13:18:26,120 - INFO - Font size changed to: 10
+2025-03-06 13:18:30,613 - INFO - Theme changed to: litera
+2025-03-06 13:18:33,365 - INFO - Theme changed to: darkly
+2025-03-06 13:18:36,990 - INFO - Theme changed to: cosmo
+2025-03-06 13:19:14,022 - INFO - Login attempt: admin
+2025-03-06 13:19:15,879 - WARNING - Failed login attempt: admin
+2025-03-06 13:19:39,060 - INFO - New user: admin (Admin)
+2025-03-06 13:19:50,425 - INFO - Login attempt: admin
+2025-03-06 13:19:50,876 - INFO - User admin logged in as Admin
+2025-03-06 13:19:52,720 - ERROR - Login error: 'HospitalApp' object has no attribute '_manage_records'
+2025-03-06 13:20:55,485 - INFO - New user: receptionist (Receptionist)
+2025-03-06 13:21:10,393 - INFO - Login attempt: receptionist
+2025-03-06 13:21:10,840 - INFO - User receptionist logged in as Receptionist
+2025-03-06 13:21:13,445 - ERROR - Login error: 'HospitalApp' object has no attribute '_manage_records'
+2025-03-06 14:46:52,171 - INFO - Font size changed to: 12
+2025-03-06 14:46:52,226 - INFO - Font size changed to: 12
+2025-03-06 14:46:52,244 - INFO - Font size changed to: 13
+2025-03-06 14:46:52,291 - INFO - Font size changed to: 13
+2025-03-06 14:46:52,321 - INFO - Font size changed to: 13
+2025-03-06 14:46:52,368 - INFO - Font size changed to: 14
+2025-03-06 14:46:52,404 - INFO - Font size changed to: 14
+2025-03-06 14:46:52,433 - INFO - Font size changed to: 14
+2025-03-06 14:46:52,478 - INFO - Font size changed to: 14
+2025-03-06 14:46:52,519 - INFO - Font size changed to: 14
+2025-03-06 14:46:52,554 - INFO - Font size changed to: 14
+2025-03-06 14:46:52,587 - INFO - Font size changed to: 15
+2025-03-06 14:46:52,631 - INFO - Font size changed to: 15
+2025-03-06 14:46:52,666 - INFO - Font size changed to: 15
+2025-03-06 14:46:52,708 - INFO - Font size changed to: 15
+2025-03-06 14:46:52,743 - INFO - Font size changed to: 16
+2025-03-06 14:46:52,781 - INFO - Font size changed to: 16
+2025-03-06 14:46:52,813 - INFO - Font size changed to: 16
+2025-03-06 14:46:52,854 - INFO - Font size changed to: 16
+2025-03-06 14:46:52,892 - INFO - Font size changed to: 16
+2025-03-06 14:46:52,923 - INFO - Font size changed to: 17
+2025-03-06 14:46:52,963 - INFO - Font size changed to: 17
+2025-03-06 14:46:52,995 - INFO - Font size changed to: 17
+2025-03-06 14:46:53,039 - INFO - Font size changed to: 17
+2025-03-06 14:46:53,076 - INFO - Font size changed to: 17
+2025-03-06 14:46:53,106 - INFO - Font size changed to: 17
+2025-03-06 14:46:53,134 - INFO - Font size changed to: 17
+2025-03-06 14:46:53,163 - INFO - Font size changed to: 17
+2025-03-06 14:46:53,198 - INFO - Font size changed to: 17
+2025-03-06 14:46:53,231 - INFO - Font size changed to: 17
+2025-03-06 14:46:53,276 - INFO - Font size changed to: 18
+2025-03-06 14:46:53,324 - INFO - Font size changed to: 18
+2025-03-06 14:46:53,361 - INFO - Font size changed to: 18
+2025-03-06 14:46:53,408 - INFO - Font size changed to: 19
+2025-03-06 14:46:53,466 - INFO - Font size changed to: 19
+2025-03-06 14:46:53,495 - INFO - Font size changed to: 19
+2025-03-06 14:46:53,540 - INFO - Font size changed to: 19
+2025-03-06 14:46:53,942 - INFO - Font size changed to: 20
+2025-03-06 14:46:53,999 - INFO - Font size changed to: 20
+2025-03-06 14:46:54,035 - INFO - Font size changed to: 20
+2025-03-06 14:46:54,071 - INFO - Font size changed to: 20
+2025-03-06 14:46:54,103 - INFO - Font size changed to: 20
+2025-03-06 14:46:54,132 - INFO - Font size changed to: 20
+2025-03-06 14:46:54,160 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,066 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,105 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,140 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,175 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,181 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,374 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,513 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,551 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,587 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,593 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,656 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,661 - INFO - Font size changed to: 20
+2025-03-06 14:46:55,716 - INFO - Font size changed to: 20
+2025-03-06 14:46:57,574 - INFO - Font size changed to: 20
+2025-03-06 14:46:57,608 - INFO - Font size changed to: 20
+2025-03-06 14:46:57,812 - INFO - Font size changed to: 20
+2025-03-06 14:46:57,845 - INFO - Font size changed to: 19
+2025-03-06 14:46:57,889 - INFO - Font size changed to: 19
+2025-03-06 14:46:57,923 - INFO - Font size changed to: 19
+2025-03-06 14:46:57,948 - INFO - Font size changed to: 19
+2025-03-06 14:46:58,010 - INFO - Font size changed to: 19
+2025-03-06 14:46:58,017 - INFO - Font size changed to: 18
+2025-03-06 14:46:58,073 - INFO - Font size changed to: 19
+2025-03-06 14:46:58,120 - INFO - Font size changed to: 19
+2025-03-06 14:46:58,226 - INFO - Font size changed to: 18
+2025-03-06 14:46:58,265 - INFO - Font size changed to: 18
+2025-03-06 14:46:58,280 - INFO - Font size changed to: 18
+2025-03-06 14:46:58,325 - INFO - Font size changed to: 18
+2025-03-06 14:46:58,364 - INFO - Font size changed to: 17
+2025-03-06 14:46:58,444 - INFO - Font size changed to: 17
+2025-03-06 14:46:58,460 - INFO - Font size changed to: 17
+2025-03-06 14:46:58,513 - INFO - Font size changed to: 17
+2025-03-06 14:46:58,543 - INFO - Font size changed to: 17
+2025-03-06 14:46:58,605 - INFO - Font size changed to: 17
+2025-03-06 14:46:58,611 - INFO - Font size changed to: 16
+2025-03-06 14:46:58,671 - INFO - Font size changed to: 16
+2025-03-06 14:46:58,686 - INFO - Font size changed to: 16
+2025-03-06 14:46:58,755 - INFO - Font size changed to: 16
+2025-03-06 14:46:58,789 - INFO - Font size changed to: 16
+2025-03-06 14:46:58,793 - INFO - Font size changed to: 16
+2025-03-06 14:46:58,855 - INFO - Font size changed to: 16
+2025-03-06 14:46:59,374 - INFO - Font size changed to: 16
+2025-03-06 14:46:59,406 - INFO - Font size changed to: 15
+2025-03-06 14:46:59,439 - INFO - Font size changed to: 15
+2025-03-06 14:46:59,457 - INFO - Font size changed to: 15
+2025-03-06 14:46:59,501 - INFO - Font size changed to: 15
+2025-03-06 14:46:59,534 - INFO - Font size changed to: 14
+2025-03-06 14:46:59,567 - INFO - Font size changed to: 14
+2025-03-06 14:46:59,596 - INFO - Font size changed to: 14
+2025-03-06 14:46:59,636 - INFO - Font size changed to: 13
+2025-03-06 14:46:59,673 - INFO - Font size changed to: 13
+2025-03-06 14:46:59,702 - INFO - Font size changed to: 13
+2025-03-06 14:47:33,631 - INFO - New user: dogah (Doctor)
+2025-03-06 14:47:50,733 - INFO - Login attempt: dogah
+2025-03-06 14:47:51,239 - INFO - User dogah logged in as Doctor
+2025-03-06 14:48:18,460 - ERROR - Login error: 'HospitalApp' object has no attribute '_view_doctor_appointments'
+2025-03-06 15:40:27,124 - INFO - Theme changed to: darkly
+2025-03-06 15:40:31,908 - INFO - Font size changed to: 12
+2025-03-06 15:40:31,956 - INFO - Font size changed to: 12
+2025-03-06 15:40:31,975 - INFO - Font size changed to: 13
+2025-03-06 15:40:32,026 - INFO - Font size changed to: 13
+2025-03-06 15:40:32,062 - INFO - Font size changed to: 14
+2025-03-06 15:40:32,105 - INFO - Font size changed to: 14
+2025-03-06 15:40:32,143 - INFO - Font size changed to: 15
+2025-03-06 15:40:32,201 - INFO - Font size changed to: 15
+2025-03-06 15:40:32,237 - INFO - Font size changed to: 15
+2025-03-06 15:40:32,298 - INFO - Font size changed to: 15
+2025-03-06 15:40:32,335 - INFO - Font size changed to: 15
+2025-03-06 15:40:32,820 - INFO - Font size changed to: 16
+2025-03-06 15:40:32,867 - INFO - Font size changed to: 16
+2025-03-06 15:40:32,885 - INFO - Font size changed to: 16
+2025-03-06 15:40:32,938 - INFO - Font size changed to: 16
+2025-03-06 15:40:32,978 - INFO - Font size changed to: 17
+2025-03-06 15:40:33,018 - INFO - Font size changed to: 17
+2025-03-06 15:40:33,383 - INFO - Font size changed to: 17
+2025-03-06 15:40:34,170 - INFO - Font size changed to: 17
+2025-03-06 15:40:34,211 - INFO - Font size changed to: 17
+2025-03-06 15:40:34,219 - INFO - Font size changed to: 16
+2025-03-06 15:40:34,257 - INFO - Font size changed to: 15
+2025-03-06 15:40:34,291 - INFO - Font size changed to: 14
+2025-03-06 15:40:34,324 - INFO - Font size changed to: 14
+2025-03-06 15:40:34,364 - INFO - Font size changed to: 14
+2025-03-06 15:40:34,415 - INFO - Font size changed to: 13
+2025-03-06 15:40:34,458 - INFO - Font size changed to: 13
+2025-03-06 15:40:34,496 - INFO - Font size changed to: 13
+2025-03-06 15:40:34,549 - INFO - Font size changed to: 13
+2025-03-06 15:40:34,588 - INFO - Font size changed to: 13
+2025-03-06 15:40:37,328 - INFO - Theme changed to: superhero
+2025-03-06 15:40:40,663 - INFO - Theme changed to: minty
+2025-03-06 15:40:45,266 - INFO - Theme changed to: litera
+2025-03-06 15:40:48,659 - INFO - Theme changed to: minty
+2025-03-06 15:40:51,497 - INFO - Theme changed to: superhero
+2025-03-06 15:41:02,604 - INFO - Theme changed to: darkly
+2025-03-06 15:41:10,495 - INFO - Theme changed to: minty
+2025-03-06 15:41:23,642 - INFO - Theme changed to: superhero
+2025-03-06 16:32:35,703 - INFO - New user: gary (Doctor)
+2025-03-06 16:32:49,041 - INFO - Login attempt: gary
+2025-03-06 16:32:49,549 - INFO - User gary logged in as Doctor
+2025-03-06 16:34:13,434 - INFO - Font size changed to: 11
+2025-03-06 16:34:13,734 - INFO - Font size changed to: 10
+2025-03-06 16:34:13,835 - INFO - Font size changed to: 10
+2025-03-06 16:34:13,938 - INFO - Font size changed to: 10
+2025-03-06 16:34:14,041 - INFO - Font size changed to: 10
+2025-03-06 16:34:14,141 - INFO - Font size changed to: 10
+2025-03-06 16:34:14,241 - INFO - Font size changed to: 10
+2025-03-06 16:34:14,355 - INFO - Font size changed to: 10
+2025-03-06 16:34:17,871 - INFO - Font size changed to: 10
+2025-03-06 16:34:17,911 - INFO - Font size changed to: 10
+2025-03-06 16:34:17,954 - INFO - Font size changed to: 10
+2025-03-06 16:34:17,995 - INFO - Font size changed to: 11
+2025-03-06 16:34:18,036 - INFO - Font size changed to: 11
+2025-03-06 16:34:18,050 - INFO - Font size changed to: 12
+2025-03-06 16:34:18,127 - INFO - Font size changed to: 12
+2025-03-06 16:34:18,149 - INFO - Font size changed to: 12
+2025-03-06 16:34:18,186 - INFO - Font size changed to: 12
+2025-03-06 16:34:18,222 - INFO - Font size changed to: 13
+2025-03-06 16:34:18,266 - INFO - Font size changed to: 13
+2025-03-06 16:34:18,303 - INFO - Font size changed to: 13
+2025-03-06 16:34:18,344 - INFO - Font size changed to: 14
+2025-03-06 16:34:18,388 - INFO - Font size changed to: 14
+2025-03-06 16:34:18,423 - INFO - Font size changed to: 14
+2025-03-06 16:34:18,471 - INFO - Font size changed to: 14
+2025-03-06 16:34:18,506 - INFO - Font size changed to: 15
+2025-03-06 16:34:18,548 - INFO - Font size changed to: 17
+2025-03-06 16:34:18,588 - INFO - Font size changed to: 18
+2025-03-06 16:34:18,625 - INFO - Font size changed to: 19
+2025-03-06 16:34:18,665 - INFO - Font size changed to: 20
+2025-03-06 16:34:18,703 - INFO - Font size changed to: 20
+2025-03-06 16:34:18,738 - INFO - Font size changed to: 20
+2025-03-06 16:34:33,552 - INFO - User logged out
